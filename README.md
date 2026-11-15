@@ -20,7 +20,7 @@ Use Python 3.12. Windows learners should use WSL 2 so the workshop commands and 
 
 ```bash
 python3 -m venv .venv
-source .venv/bin/activate
+source .venv/Scripts/activate
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```

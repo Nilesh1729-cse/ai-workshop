@@ -100,10 +100,12 @@ case "${1:-doctor}" in
   judge0-stop) docker compose -f "$ROOT/judge0/docker-compose.yml" down ;;
   judge0-logs) docker compose -f "$ROOT/judge0/docker-compose.yml" logs -f ;;
   judge0-test)
-    if [[ -x "$PYTHON" ]]; then
+    if [[ -x "$PYTHON" || -f "$PYTHON" ]]; then
       "$PYTHON" "$ROOT/scripts/check-judge0.py"
-    else
+    elif command -v python3 >/dev/null 2>&1; then
       python3 "$ROOT/scripts/check-judge0.py"
+    else
+      python "$ROOT/scripts/check-judge0.py"
     fi
     ;;
   *)
