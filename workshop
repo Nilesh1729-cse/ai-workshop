@@ -2,7 +2,13 @@
 set -u
 
 ROOT="$(cd "$(dirname "$0")" && pwd)"
-PYTHON="$ROOT/.venv/bin/python"
+if [[ -x "$ROOT/.venv/bin/python" ]]; then
+  PYTHON="$ROOT/.venv/bin/python"
+elif [[ -f "$ROOT/.venv/Scripts/python.exe" ]]; then
+  PYTHON="$ROOT/.venv/Scripts/python.exe"
+else
+  PYTHON="$ROOT/.venv/bin/python"
+fi
 FAILURES=0
 
 pass() { printf "✓ %s\n" "$1"; }

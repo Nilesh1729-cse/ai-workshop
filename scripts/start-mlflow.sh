@@ -9,7 +9,7 @@ MLFLOW_PID_FILE="$STATE_DIR/mlflow.pid"
 
 mkdir -p "$STATE_DIR"
 
-if [[ ! -f "$VENV_DIR/bin/activate" ]]; then
+if [[ ! -f "$VENV_DIR/bin/activate" && ! -f "$VENV_DIR/Scripts/activate" ]]; then
   echo "Run the setup steps in README.md first."
   exit 1
 fi
@@ -25,7 +25,11 @@ if curl -fsS http://127.0.0.1:5001/health >/dev/null 2>&1; then
   exit 1
 fi
 
-source "$VENV_DIR/bin/activate"
+if [[ -f "$VENV_DIR/bin/activate" ]]; then
+  source "$VENV_DIR/bin/activate"
+else
+  source "$VENV_DIR/Scripts/activate"
+fi
 
 MLFLOW_TRACKING_URI="http://127.0.0.1:5001" nohup mlflow server \
   --host 127.0.0.1 \
